@@ -5,7 +5,11 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class User(AbstractUser):
     username = models.CharField(unique=True, verbose_name="Ник")
-    email = models.EmailField(verbose_name="Email", null=True, blank=True,)
+    email = models.EmailField(
+        verbose_name="Email",
+        null=True,
+        blank=True,
+    )
     phone = PhoneNumberField(verbose_name="Телефон", null=True, blank=True, help_text="Введите номер телефона")
 
     USERNAME_FIELD = "username"
@@ -17,4 +21,3 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-
