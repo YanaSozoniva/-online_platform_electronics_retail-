@@ -12,6 +12,8 @@ python-dotenv = "^1.1.0"
 flake8 = "^7.2.0"
 black = "^25.1.0"
 isort = "^6.0.1"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.1.0"}
+psycopg2 = "^2.9.10"
 
 
 [build-system]
