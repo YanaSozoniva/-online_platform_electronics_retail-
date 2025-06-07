@@ -53,6 +53,17 @@ class Supplier(models.Model):
         blank=True,
         null=True,
     )
+    FACTORY = "factory"
+    RETAIL = "retail"
+    ENTREPRENEUR = "entrepreneur"
+
+    TYPE_CHOICES = [
+        (FACTORY, "завод"),
+        (RETAIL, "розничная сеть"),
+        (ENTREPRENEUR, "индивидуальный предприниматель"),
+    ]
+
+    type = models.CharField(max_length=35, choices=TYPE_CHOICES, default=FACTORY, verbose_name="тип юридического лица")
 
     def __str__(self):
         """Метод для строкового отображения информации о поставщиках"""
