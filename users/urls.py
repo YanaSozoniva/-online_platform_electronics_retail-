@@ -1,7 +1,14 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+
 
 from users.apps import UserConfig
 
 app_name = UserConfig.name
 
-urlpatterns = []
+router = DefaultRouter()
+router.register("", UserViewSet, basename="users")
+
+urlpatterns = [
+
+] + router.urls
