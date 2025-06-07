@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib import messages
+from django.utils.translation import ngettext
 
 from suppliers.models import Supplier, Order, Product
 
@@ -41,6 +43,19 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     """Класс для настройки отображения модели заказ"""
+    @admin.action(description="Сlearing debt to suppliers at selected facilities")
+    def clear_debt(self, request, queryset):
+        updated = queryset.update(debt_to_supplier=0)
+        self.message_user(
+            request,
+            ngettext(
+                "%d debt was successfully cleared.",
+                "%d debts was successfully cleared.",
+                updated,
+            )
+            % updated,
+            messages.SUCCESS,
+        )
 
     list_display = (
         "id",
@@ -51,3 +66,4 @@ class OrderAdmin(admin.ModelAdmin):
         "created_at",
         "level",
     )
+    actions = [clear_debt]
