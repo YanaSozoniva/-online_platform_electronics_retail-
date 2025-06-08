@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib import messages
+from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.translation import ngettext
 
 from suppliers.models import Supplier, Order, Product
@@ -43,7 +45,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     """Класс для настройки отображения модели заказ"""
-    @admin.action(description="Сlearing debt to suppliers at selected facilities")
+    @admin.action(description="Очистить задолжность перед поставщиком у выбранных объектов")
     def clear_debt(self, request, queryset):
         updated = queryset.update(debt_to_supplier=0)
         self.message_user(
@@ -61,9 +63,16 @@ class OrderAdmin(admin.ModelAdmin):
         "id",
         "customer",
         "product",
-        "supplier",
+        "get_supplier_link",
         "debt_to_supplier",
         "created_at",
         "level",
     )
     actions = [clear_debt]
+    list_filter = ("supplier__city",)
+
+    def get_supplier_link(self, obj):
+        url = reverse('admin:suppliers_supplier_change', args=[obj.supplier.id])
+        return format_html('<a href="{}">{}</a>', url, obj.supplier.name)
+
+    get_supplier_link.short_description = 'Поставщик'
