@@ -17,6 +17,8 @@ class SupplierSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    debt_to_supplier = serializers.DecimalField(read_only=True)
+
     class Meta:
         model = Order
         fields = "__all__"
