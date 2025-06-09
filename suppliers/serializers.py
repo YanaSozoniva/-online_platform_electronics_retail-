@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from suppliers.models import Product, Supplier, Order
+
+from suppliers.models import Order, Product, Supplier
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -17,7 +18,7 @@ class SupplierSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    debt_to_supplier = serializers.DecimalField(read_only=True)
+    debt_to_supplier = serializers.DecimalField(read_only=True, max_digits=10, decimal_places=2)
 
     class Meta:
         model = Order
