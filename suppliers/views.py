@@ -1,4 +1,4 @@
-from rest_framework.filters import OrderingFilter, SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 
 from suppliers.models import Order, Product, Supplier
@@ -18,6 +18,5 @@ class OrderViewSet(ModelViewSet):
 class SupplierViewSet(ModelViewSet):
     serializer_class = SupplierSerializer
     queryset = Supplier.objects.all()
-    filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ["country"]
-    ordering_fields = ["country"]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ("country",)
